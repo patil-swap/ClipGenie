@@ -1,5 +1,9 @@
 import React from "react";
-import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle
+} from "@/components/ui/alert-dialog";
 import Image from "next/image";
 
 function CustomLoading({ loading }) {
@@ -7,6 +11,7 @@ function CustomLoading({ loading }) {
     <div>
       <AlertDialog open={loading}>
         <AlertDialogContent className="bg-white">
+          <AlertDialogTitle></AlertDialogTitle>
           <div className="flex flex-col items-center my-10 justify-center">
             <Image
               src={"/loading.gif"}

@@ -33,7 +33,6 @@ function SideNav() {
   ];
 
   const path = usePathname();
-  console.log(path);
 
   return (
     <div className="w-64 h-screen shadow-md p-5">
