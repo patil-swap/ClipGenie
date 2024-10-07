@@ -5,7 +5,7 @@ import SideNav from "./_components/SideNav";
 function DashboardLayout({ children }) {
   return (
     <div>
-      <div className="hidden md:block h-screen bg-white fixed mt-[82px] w-64">
+      <div className="hidden md:block h-screen fixed mt-[82px] w-64">
         <SideNav />
       </div>
       <div>
