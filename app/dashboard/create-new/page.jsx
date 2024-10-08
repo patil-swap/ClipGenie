@@ -12,6 +12,7 @@ function CreateNew() {
   const [formData, setFormData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [audioFileUrl, setAudioFileUrl] = useState();
+  const [captions, setCaptions] = useState();
 
   const onHandleInputChange = (fieldName, fieldValue) => {
     console.log(fieldName, fieldValue);
@@ -57,8 +58,18 @@ function CreateNew() {
         text: script
       })
       .then((resp) => {
-        console.log(resp.data);
         setAudioFileUrl(resp.data.result);
+        generateAudioCaption(resp.data.result);
+      });
+  };
+
+  const generateAudioCaption = async (audioFileUrl) => {
+    const result = await axios
+      .post("/api/generate-caption", {
+        audioFileUrl: audioFileUrl
+      })
+      .then((resp) => {
+        setCaptions(resp.data.result);
       });
     setLoading(false);
   };
