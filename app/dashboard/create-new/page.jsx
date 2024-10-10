@@ -11,6 +11,7 @@ import { VideoDataContext } from "@/app/_context/VideoDataContext";
 import { db } from "@/configs/db";
 import { VideoData } from "@/configs/schema";
 import { useUser } from "@clerk/nextjs";
+import PlayerDialog from "../_components/PlayerDialog";
 
 function CreateNew() {
   const [formData, setFormData] = useState([]);
@@ -19,8 +20,10 @@ function CreateNew() {
   const [audioFileUrl, setAudioFileUrl] = useState();
   const [captions, setCaptions] = useState();
   const [imageList, setImageList] = useState();
-  const { user } = useUser();
+  const [playVideo, setPlayVideo] = useState();
+  const [videoId, setVideoId] = useState();
 
+  const { user } = useUser();
   const { videoData, setVideoData } = useContext(VideoDataContext);
 
   const onHandleInputChange = (fieldName, fieldValue) => {
@@ -128,6 +131,8 @@ function CreateNew() {
       imageList: videoData?.imageList,
       createBy: user?.primaryEmailAddress?.emailAddress
     });
+    setVideoId(result[0].id);
+    setPlayVideo(true);
     setLoading(false);
   };
 
@@ -147,6 +152,7 @@ function CreateNew() {
       </div>
 
       <CustomLoading loading={loading} />
+      <PlayerDialog playVideo={playVideo} videoId={videoId} />
     </div>
   );
 }
