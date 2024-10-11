@@ -10,6 +10,7 @@ function VideoList({ videoList }) {
     <div className="mt-10 gap-5 grid grid-col-2 md:grid-col-3 lg:grid-cols-4">
       {videoList?.map((video, index) => (
         <div
+          key={index}
           className="cursor-pointer hover:scale-105 transition-all"
           onClick={() => {
             setOpenPlayerDialog(Date.now);
@@ -28,7 +29,7 @@ function VideoList({ videoList }) {
             }}
             inputProps={{
               ...video,
-              setDurationInFrame: (v) => console.log(v)
+              setDurationInFrame: (v) => `{javascript:void(0)}`
             }}
           />
         </div>

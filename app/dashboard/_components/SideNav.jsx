@@ -1,5 +1,5 @@
 "use client";
-import { CircleUser, FileVideo, PanelsTopLeft, ShieldPlus } from "lucide-react";
+import { FileVideo, PanelsTopLeft, ShieldPlus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -23,12 +23,6 @@ function SideNav() {
       name: "Upgrade",
       path: "/upgrade",
       icon: ShieldPlus
-    },
-    {
-      id: 4,
-      name: "Account",
-      path: "/account",
-      icon: CircleUser
     }
   ];
 
