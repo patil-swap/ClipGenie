@@ -1,11 +1,31 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EmptyState from "./_components/EmptyState";
 import Link from "next/link";
+import { db } from "@/configs/db";
+import { VideoData } from "@/configs/schema";
+import { eq } from "drizzle-orm";
+import { useUser } from "@clerk/nextjs";
+import VideoList from "./_components/VideoList";
 
 function Dashboard() {
   const [videoList, setVideoList] = useState([]);
+  const { user } = useUser();
+
+  const getVideoList = async () => {
+    const result = await db
+      .select()
+      .from(VideoData)
+      .where(eq(VideoData?.createBy, user?.primaryEmailAddress?.emailAddress));
+
+    setVideoList(result);
+  };
+
+  useEffect(() => {
+    user && getVideoList();
+  }, [user]);
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -19,6 +39,8 @@ function Dashboard() {
           <EmptyState />
         </div>
       )}
+
+      <VideoList videoList={videoList} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
@@ -12,11 +12,13 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/configs/db";
 import { VideoData } from "@/configs/schema";
 import { eq } from "drizzle-orm";
+import { useRouter } from "next/navigation";
 
 function PlayerDialog({ playVideo, videoId }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [videoData, setVideoData] = useState();
   const [durationInFrame, setDurationInFrame] = useState(100);
+  const router = useRouter();
 
   useEffect(() => {
     setOpenDialog(playVideo);
@@ -33,32 +35,37 @@ function PlayerDialog({ playVideo, videoId }) {
   };
 
   return (
-    <Dialog open={openDialog}>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogContent className="flex flex-col items-center">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold my-5">
             Your video is ready!
           </DialogTitle>
-          <DialogDescription>
-            <Player
-              component={RemotionVideo}
-              durationInFrames={Number(durationInFrame.toFixed(0))}
-              compositionWidth={300}
-              compositionHeight={450}
-              fps={30}
-              inputProps={{
-                ...videoData,
-                setDurationinFrame: (frameValue) =>
-                  setDurationInFrame(frameValue)
-              }}
-              controls={true}
-            />
-            <div className="flex gap-10 items-center mt-10">
-              <Button className="bg-accent">Cancel</Button>
-              <Button>Export</Button>
-            </div>
-          </DialogDescription>
         </DialogHeader>
+        <Player
+          component={RemotionVideo}
+          durationInFrames={Number(durationInFrame.toFixed(0))}
+          compositionWidth={300}
+          compositionHeight={450}
+          fps={30}
+          inputProps={{
+            ...videoData,
+            setDurationInFrame: (frameValue) => setDurationInFrame(frameValue)
+          }}
+          controls={true}
+        />
+        <DialogFooter className="flex gap-10 items-center mt-10">
+          <Button
+            className="bg-accent"
+            onClick={() => {
+              router.replace("/dashboard");
+              setOpenDialog(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button>Export</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -14,12 +14,12 @@ function RemotionVideo({
   audioFileUrl,
   captions,
   imageList,
-  setDurationinFrame
+  setDurationInFrame
 }) {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const getDurationFrames = () => {
-    setDurationinFrame((captions[captions?.length - 1]?.end / 1000) * fps);
+    setDurationInFrame((captions[captions?.length - 1]?.end / 1000) * fps);
     return (captions[captions?.length - 1]?.end / 1000) * fps;
   };
 
